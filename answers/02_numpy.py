@@ -241,7 +241,7 @@ The result contains one score for each of the 14 days.
 '''
 
 
-### B8 ##
+## B8 ##
 print("\nB8\n")
 city_mean = np.nanmean(temps, axis=1)
 city_max = np.nanmax(temps, axis=1)
@@ -279,7 +279,7 @@ NaN-aware functions ignore missing temperature readings.
 '''
 
 
-### B9 ##
+## B9 ##
 print("\nB9\n")
 flat_temps = temps.flatten()
 
@@ -327,5 +327,37 @@ Shuffling before splitting helps prevent the original ordering from determining 
 A fixed seed makes the random split reproducible when sharing results.
 '''
 
+
 ## B10 ##
 print("\nB10\n")
+temperature_labels = np.where(
+    np.isnan(temps),
+    "missing",
+    np.where(
+        temps > 30,
+        "hot",
+        np.where(temps >= 22, "mild", "cold")
+    )
+)
+
+print("Temperature label grid:\n", temperature_labels)
+print("Label grid shape:", temperature_labels.shape)
+
+scores = np.array([0.08, 0.62, 0.21, 0.09])
+labels = ["rain", "clear", "cloudy", "fog"]
+
+predicted_index = np.argmax(scores)
+predicted_label = labels[predicted_index]
+
+print("Temperature label grid:\n", temperature_labels)
+print("Label grid shape:", temperature_labels.shape)
+
+print("Scores:", scores)
+print("Predicted index:", predicted_index)
+print("Predicted label:", predicted_label)
+print("\n")
+
+'''
+A classifier needs argmax to find the index of the highest score.
+max returns only the highest score, not the corresponding class index.
+'''
