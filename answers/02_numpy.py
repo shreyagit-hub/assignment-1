@@ -87,3 +87,28 @@ and since it returns only the selected elements, the result does not retain the 
 
 ## B4 ##
 print("\nB4\n")
+original_arr = temps[0, 0]
+
+view = temps[0, :3]
+view[0] = 999
+
+print("Original array after modifying the view:\n", temps)
+print("First temperature is now:", temps[0, 0])
+
+temps[0, 0] = original_arr
+
+copied_slice = temps[0, :3].copy()
+copied_slice[0] = 999
+
+print("Modified copy:", copied_slice)
+print("Original array remains unchanged:\n", temps)
+
+'''
+NumPy slicing often returns a view to avoid copying large arrays, making operations efficient
+Forgetting this can accidentally modify the original dataset
+.copy() should be used when independent data is required
+'''
+
+
+## B5 ##
+print("\nB5\n")
