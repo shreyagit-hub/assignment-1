@@ -281,3 +281,51 @@ NaN-aware functions ignore missing temperature readings.
 
 ### B9 ##
 print("\nB9\n")
+flat_temps = temps.flatten()
+
+print("Flattened shape:", flat_temps.shape)
+print("Number of samples:", flat_temps.size)
+
+np.random.seed(42)
+
+indices = np.arange(flat_temps.size)
+np.random.shuffle(indices)
+
+train_indices = indices[:56]
+test_indices = indices[56:]
+
+print("Training indices shape:", train_indices.shape)
+print("Testing indices shape:", test_indices.shape)
+
+print("Total samples:",
+      train_indices.size + test_indices.size)
+
+overlap = np.intersect1d(train_indices, test_indices)
+
+print("Shared indices:", overlap)
+print("No overlap:", overlap.size == 0)
+
+np.random.seed(42)
+
+indices_repeat = np.arange(flat_temps.size)
+np.random.shuffle(indices_repeat)
+
+train_repeat = indices_repeat[:56]
+test_repeat = indices_repeat[56:]
+
+print("Training split identical:",
+      np.array_equal(train_indices, train_repeat))
+
+print("Testing split identical:",
+      np.array_equal(test_indices, test_repeat))
+
+assert np.array_equal(train_indices, train_repeat)
+assert np.array_equal(test_indices, test_repeat)
+
+'''
+Shuffling before splitting helps prevent the original ordering from determining which samples enter the training or test set.
+A fixed seed makes the random split reproducible when sharing results.
+'''
+
+## B10 ##
+print("\nB10\n")
