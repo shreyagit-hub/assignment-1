@@ -31,8 +31,8 @@ print("Flattened array:", flat)
 print("Flattened shape:", flat.shape)
 
 '''
--1 tells NumPy to calculate the missing dimension
-Reshaping usually creates a view, so it does not need to copy the underlying data
+-1 tells NumPy to calculate the missing dimension.
+Reshaping usually creates a view, so it does not need to copy the underlying data.
 '''
 
 
@@ -81,7 +81,7 @@ print("(c) Kathmandu days above 30°C:", hot_days)
 
 '''
 A Boolean mask selects elements where its value is True 
-and since it returns only the selected elements, the result does not retain the original 2D shape
+and since it returns only the selected elements, the result does not retain the original 2D shape.
 '''
 
 
@@ -104,11 +104,66 @@ print("Modified copy:", copied_slice)
 print("Original array remains unchanged:\n", temps)
 
 '''
-NumPy slicing often returns a view to avoid copying large arrays, making operations efficient
-Forgetting this can accidentally modify the original dataset
-.copy() should be used when independent data is required
+NumPy slicing often returns a view to avoid copying large arrays, making operations efficient.
+Forgetting this can accidentally modify the original dataset.
 '''
 
 
 ## B5 ##
 print("\nB5\n")
+import time
+
+def to_fahrenheit_loop(values):
+    flat = values.ravel()
+    result = np.empty_like(flat)
+
+    for i in range(flat.size):
+        result[i] = flat[i] * 9 / 5 + 32
+
+    return result.reshape(values.shape)
+
+
+fahrenheit_loop = to_fahrenheit_loop(temps)
+
+print("Fahrenheit using loop:\n", fahrenheit_loop)
+
+fahrenheit_vectorized = temps * 9 / 5 + 32
+
+print("Fahrenheit using vectorization:\n",
+      fahrenheit_vectorized)
+
+print("Results agree:",
+      np.allclose(fahrenheit_loop, fahrenheit_vectorized,
+                  equal_nan=True))
+
+large_temps = np.random.randint(
+    14, 36, size=1_000_000
+).astype(float)
+
+start = time.perf_counter()
+large_f_loop = to_fahrenheit_loop(large_temps)
+loop_time = time.perf_counter() - start
+
+start = time.perf_counter()
+large_f_vectorized = large_temps * 9 / 5 + 32
+vector_time = time.perf_counter() - start
+
+speedup = loop_time / vector_time
+
+print("Loop time:", loop_time, "seconds")
+print("Vectorized time:", vector_time, "seconds")
+print("Speedup:", speedup, "x faster")
+
+print("Large results agree:",
+      np.allclose(large_f_loop, large_f_vectorized))
+
+'''
+A Python loop has extra overhead from interpreting each iteration,
+indexing individual values, and assigning them one at a time.
+Vectorized NumPy operations perform the calculations in optimized
+compiled code, reducing Python-level overhead.
+'''
+
+
+## B6 ##
+print("\nB6\n")
