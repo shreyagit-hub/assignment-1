@@ -202,3 +202,44 @@ But (5, 14) and (5,) are incompatible because 14 and 5 differ.
 
 ## B7 ##
 print("\nB7\n")
+quantities = np.array([2, 3, 1])
+prices = np.array([120, 90, 250])
+
+elementwise = quantities * prices
+print("Element-wise multiplication:", elementwise)
+
+total_cost = quantities @ prices
+print("Total grocery cost:", total_cost)
+
+'''
+* multiplies corresponding elements and returns an array.
+@ computes the dot product here, multiplying and summing
+corresponding elements to return one total value.
+'''
+
+mean_temps_per_day = np.nanmean(temps, axis=0)
+mean_humidity_per_day = np.nanmean(humidity, axis=0)
+
+features = np.column_stack((
+    mean_temps_per_day,
+    mean_humidity_per_day
+))
+
+weights = np.array([0.6, -0.1])
+
+comfort_scores = features @ weights
+
+print("Features shape:", features.shape)
+print("Weights shape:", weights.shape)
+print("Comfort scores:", comfort_scores)
+print("Result shape:", comfort_scores.shape)
+
+'''
+Matrix multiplication requires the number of columns
+in features (2) to match the number of weights (2).
+The result contains one score for each of the 14 days.
+'''
+
+
+### B8 ##
+print("\nB8\n")
