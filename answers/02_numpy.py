@@ -39,29 +39,51 @@ Reshaping usually creates a view, so it does not need to copy the underlying dat
 ## B2 ##
 print("\nB2\n")
 result_a = temps[1, 2]
-print("Pokhara day-3 temperature:", result_a,
+print("(a) Pokhara day-3 temperature:", result_a,
       "\nShape:", np.shape(result_a))
 
 result_b = temps[:, -1]
-print("Last-day readings:", result_b,
+print("(b) Last-day readings:", result_b,
       "\nShape:", result_b.shape)
 
 result_c = temps[2, :]
-print("Biratnagar full fortnight:", result_c,
+print("(c) Biratnagar full fortnight:", result_c,
       "\nShape:", result_c.shape)
 
 result_d = temps[:3, 3:8]
-print("First three cities across days 4-8:\n", result_d,
+print("(d) First three cities across days 4-8:\n", result_d,
       "\nShape:", result_d.shape)
 
 result_e = temps[3, ::2]
-print("Lalitpur every other day:", result_e,
+print("(e) Lalitpur every other day:", result_e,
       "\nShape:", result_e.shape)
 
 result_f = temps[0, ::-1]
-print("Kathmandu fortnight reversed:", result_f,
+print("(f) Kathmandu fortnight reversed:", result_f,
       "\nShape:", result_f.shape)
 
 
 ## B3 ##
 print("\nB3\n")
+mask = temps > 30
+
+print("(a) Boolean mask:\n", mask)
+
+counts = np.sum(mask, axis=1)
+
+print("(b) Readings above 30°C per city:")
+print(np.column_stack((cities, counts)))
+
+kathmandu_mask = mask[0]
+hot_days = days[kathmandu_mask]
+
+print("(c) Kathmandu days above 30°C:", hot_days)
+
+'''
+A Boolean mask selects elements where its value is True 
+and since it returns only the selected elements, the result does not retain the original 2D shape
+'''
+
+
+## B4 ##
+print("\nB4\n")
