@@ -243,3 +243,41 @@ The result contains one score for each of the 14 days.
 
 ### B8 ##
 print("\nB8\n")
+city_mean = np.nanmean(temps, axis=1)
+city_max = np.nanmax(temps, axis=1)
+city_min = np.nanmin(temps, axis=1)
+city_std = np.nanstd(temps, axis=1)
+
+print("Mean per city:", city_mean,
+      "\nShape:", city_mean.shape)
+print("Maximum per city:", city_max,
+      "\nShape:", city_max.shape)
+print("Minimum per city:", city_min,
+      "\nShape:", city_min.shape)
+print("Standard deviation per city:", city_std,
+      "\nShape:", city_std.shape)
+
+day_mean = np.nanmean(temps, axis=0)
+day_max = np.nanmax(temps, axis=0)
+
+print("Mean per day:", day_mean,
+      "\nShape:", day_mean.shape)
+print("Maximum per day:", day_max,
+      "\nShape:", day_max.shape)
+
+hottest_indices = np.nanargmax(temps, axis=1)
+hottest_days = days[hottest_indices]
+
+print("Hottest day indices:", hottest_indices)
+print("Hottest day labels:", hottest_days)
+print("Hottest temperatures:", city_max)
+
+'''
+axis=0 collapses the city dimension, leaving one result per day.
+axis=1 collapses the day dimension, leaving one result per city.
+NaN-aware functions ignore missing temperature readings.
+'''
+
+
+### B9 ##
+print("\nB9\n")
