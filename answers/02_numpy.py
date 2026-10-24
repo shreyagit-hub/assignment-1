@@ -167,3 +167,38 @@ compiled code, reducing Python-level overhead.
 
 ## B6 ##
 print("\nB6\n")
+city_means = np.nanmean(temps, axis=1, keepdims=True)
+
+print("City means:\n", city_means)
+print("Mean shape:", city_means.shape)
+
+anomalies = temps - city_means
+
+print("Anomaly grid:\n", anomalies)
+print("Anomaly shape:", anomalies.shape)
+
+print("Shape remains (5, 14):",
+      anomalies.shape == (5, 14))
+
+daily_correction = np.arange(14)
+
+corrected_temps = temps + daily_correction
+
+print("Daily correction:", daily_correction)
+print("Corrected temperatures:\n", corrected_temps)
+print("Corrected shape:", corrected_temps.shape)
+
+try:
+    invalid_result = temps + np.array([1, 2, 3, 4, 5])
+except ValueError as error:
+    print("Broadcasting error:", error)
+
+'''
+Broadcasting aligns dimensions from the right.
+(5, 14) and (14,) are compatible, so the daily correction works.
+But (5, 14) and (5,) are incompatible because 14 and 5 differ.
+'''
+
+
+## B7 ##
+print("\nB7\n")
